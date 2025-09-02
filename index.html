@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora VITAKIT :Selvenca,L.P</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-modal">
+        <div class="login-container">
+            <h2>Identificação do Responsável</h2>
+            <p>Por favor, insira o nome do responsável pela análise.</p>
+            <div class="input-group">
+                <label for="responsibleInput">Responsável:</label>
+                <input type="text" id="responsibleInput" placeholder="">
+            </div>
+            <button id="accessBtn" class="action-button">Acessar Calculadora</button>
+            <p id="accessMessage" class="save-message"></p>
+        </div>
+    </div>
+    
+    <div class="container" id="calculator-content">
+        <h1>Calculadora VITAKIT :Selvenca,L.P</h1>
+        <p id="currentDateTime" style="font-size: 0.9em; color: #555; text-align: right; margin-top: -15px;"></p>
+
+        <div class="upload-section">
+            <label for="imageUpload" class="upload-button">Escolher Imagem</label>
+            <input type="file" id="imageUpload" accept="image/*">
+            <p id="fileNameDisplay">Nenhuma imagem selecionada.</p>
+        </div>
+
+        <p class="instruction">Clique na área do poço para extrair o RGB.</p>
+        <div class="canvas-and-extracted-preview-wrapper">
+            <div class="extracted-color-display-container">
+                <h3>Cor Extraída da Imagem:</h3>
+                <div id="extractedColorPreview" class="color-preview-sphere" style="background-color: rgb(0,0,0);"></div>
+                <p class="extracted-rgb-values">R: <span id="extractedR">0</span> G: <span id="extractedG">0</span> B: <span id="extractedB">0</span></p>
+            </div>
+            <div class="canvas-container">
+                <canvas id="imageCanvas"></canvas>
+            </div>
+            <div class="add-clear-buttons-wrapper">
+                <div class="input-group">
+                    <label for="wellNameInput">Nome do Poço:</label>
+                    <input type="text" id="wellNameInput" placeholder="Ex: Poço 1A, Branco de Referência">
+                </div>
+                <div class="action-buttons-row-wrapper">
+                    <button id="addWellBtn" class="action-button">Adicionar Poço Extraído</button>
+                    <button id="clearWellsBtn" class="action-button clear-button">Limpar Todos os Poços</button>
+                </div>
+            </div>
+            <img id="logoImage" src="logo-vitakit.png" alt="Logo VITAKIT">
+        </div>
+
+        <div class="interpolation-settings">
+            <h2>Padrões de Calibração</h2>
+            
+            <div class="input-group">
+                <label for="sampleSizeInput">Selecione o Tamanho da Amostra de Pixel (nxn):</label>
+                <input type="number" id="sampleSizeInput" min="1" step="1" value="10">
+            </div>
+            
+            <div class="input-group">
+                <label for="methodSelect">Selecione o Método de Calibração:</label>
+                <select id="methodSelect"></select>
+            </div>
+            
+            <div class="input-group">
+                <label for="fcFormulaInput">Fórmula para Fator de Cor (FC):</label>
+                <input type="text" id="fcFormulaInput" value="(R+G+B)/R">
+            </div>
+            <p class="current-fc-formula-display">Fórmula FC Atual: (R+G+B)/R</p>
+            
+            <div class="input-group">
+                <label for="reductionVariableNameInput">Nome da Variável de Saída:</label>
+                <input type="text" id="reductionVariableNameInput" value="% Redução">
+            </div>
+            <p class="current-reduction-variable-name-display">Nome da Variável de Saída Atual: % Redução</p>
+
+            <hr>
+            <h3>Tabela de Calibração (Fórmulas por Método)</h3>
+            <div id="calibrationTableContainer">
+                <p id="noCalibrationDataMessage" style="text-align: center; color: #888;">Nenhum dado de calibração adicionado ainda.</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="newMethodNameInput">Nome do Novo Método:</label>
+                <input type="text" id="newMethodNameInput" placeholder="Ex: Padrão A, Curva Polinomial">
+            </div>
+            <div class="input-group">
+                <label for="newReductionFormulaInput">Nova Fórmula :</label>
+                <input type="text" id="newReductionFormulaInput" placeholder="Ex: m*FC+b, 30.792*(FC*FC)-... ">
+            </div>
+            
+            <button id="addCalibrationBtn" class="action-button">Adicionar Método</button>
+            <p id="interpolationSaveMessage" class="save-message"></p>
+        </div>
+        
+        <div class="wells-results-section">
+            <h2>Resultados dos Poços Adicionados</h2>
+            <div class="wells-grid" id="wellsResultsContainer">
+                <p id="noWellsMessage">Nenhum poço adicionado ainda.</p>
+            </div>
+            <button id="exportCsvBtn" class="action-button">Exportar para CSV</button>
+            <p><strong>FC Médio dos Poços:</strong> <span id="averageFcResult">Aguardando cálculo...</span></p>
+            <p><strong id="averageReductionLabel">Média % Redução dos Poços:</strong> <span id="averageReductionResult">Aguardando cálculo...</span></p>
+        </div>
+
+        <div class="notes">
+            <h3>Notas Importantes:</h3>
+            <ul>
+                <li>Esta calculadora utiliza a lógica de cálculo que você define nas fórmulas.</li>
+                <li>A precisão do resultado depende da qualidade da sua imagem e da precisão da obtenção dos valores RGB da sua amostra.</li>
+                <li>Valores que resultam em divisão por zero ou resultados não numéricos podem gerar erros nas fórmulas.</li>
+                <li>A extração de RGB no clique pega a cor média de uma pequena área ao redor do ponto clicado.</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

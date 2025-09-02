@@ -1,0 +1,547 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 15px 10px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 95vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Novos estilos para o login-modal */
+#login-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-container input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 0;
+    font-size: 1.8em;
+}
+
+h2 {
+    color: #444;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+/* Seção de Upload */
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#fileNameDisplay {
+    font-style: italic;
+    color: #666;
+    font-size: 0.85em;
+}
+
+/* Container principal para Canvas e Preview de Cor */
+.canvas-and-extracted-preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Seção de Preview de Cor Extraída da Imagem */
+.extracted-color-display-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 150px;
+}
+
+.color-preview-sphere {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.extracted-rgb-values {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* Canvas */
+.canvas-container {
+    border: 1px solid #ccc;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+#imageCanvas {
+    display: block;
+    touch-action: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    cursor: grab;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#imageCanvas:active {
+    cursor: grabbing;
+}
+
+.instruction {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.add-clear-buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.action-buttons-row-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.action-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    flex: 1;
+}
+
+.action-button:hover {
+    background-color: #218838;
+}
+
+.clear-button {
+    background-color: #dc3545;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para a imagem do logo */
+#logoImage {
+    max-width: 100%;
+    height: auto;
+    display: none;
+}
+
+/* Seção de Padrões de Calibração (interpolation-settings) */
+.interpolation-settings {
+    background-color: #f0f8ff;
+    border: 1px solid #b0c4de;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.interpolation-settings h2,
+.interpolation-settings h3 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.interpolation-settings hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    min-width: 200px;
+    max-width: 45%;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.85em;
+    color: #333;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.current-fc-formula-display,
+.current-reduction-variable-name-display,
+.current-reduction-formula-display,
+.current-config-display {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.save-message {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 0.9em;
+    width: 100%;
+    text-align: center;
+}
+
+/* Tabela de Calibração */
+.calibration-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.calibration-table th, .calibration-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+.calibration-table th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+.calibration-table button {
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.calibration-table button:hover {
+    background-color: #c82333;
+}
+
+
+/* Seção de Resultados dos Poços */
+.wells-results-section {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.wells-results-section h2 {
+    margin-bottom: 15px;
+}
+
+/* Estilo para a grade de poços, com barra de rolagem */
+.wells-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    max-height: 400px; /* Define uma altura máxima para a grade */
+    overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+    padding-right: 15px; /* Adiciona um espaço para que a barra não sobreponha o conteúdo */
+    margin-bottom: 15px; /* Adiciona espaço entre a grade e o botão */
+}
+
+.well-card {
+    background-color: #e6f7ff;
+    border: 1px solid #99d9ff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.well-card h3 {
+    margin-top: 0;
+    font-size: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.well-card p {
+    margin: 3px 0;
+    font-size: 0.85em;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #dc3545;
+}
+
+#noWellsMessage {
+    grid-column: 1 / -1;
+    color: #888;
+    font-style: italic;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Estilo para o botão "Exportar" - Sem flexbox para evitar esticamento */
+#exportCsvBtn {
+    display: block; /* Garante que o botão seja um bloco para centralizar */
+    max-width: 200px;
+    margin: 15px auto; /* Centraliza o botão e adiciona margem */
+    padding: 10px 15px;
+    height: auto;
+}
+
+/* Seção de Notas Importantes */
+.notes {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+    padding: 15px;
+    color: #664d03;
+    font-size: 0.85em;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.notes h3 {
+    color: #664d03;
+    margin-bottom: 10px;
+}
+
+.notes ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.notes li {
+    margin-bottom: 5px;
+}
+
+/* --- Media Queries para Layout Responsivo --- */
+
+/* Tablet e Telas Médias (>= 768px) */
+@media (min-width: 768px) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        grid-template-areas:
+            "header header"
+            "upload upload"
+            "instruction instruction"
+            "canvas-wrapper extracted-color"
+            "logo-image logo-image"
+            "add-clear-buttons add-clear-buttons"
+            "interpolation wellsresults"
+            "notes notes";
+    }
+
+    h1 { grid-area: header; }
+    .upload-section { grid-area: upload; }
+    .instruction { grid-area: instruction; text-align: center; margin-bottom: 10px; }
+    .canvas-and-extracted-preview-wrapper { grid-area: canvas-wrapper; flex-direction: row; justify-content: center; align-items: flex-start; flex: 3; }
+    .extracted-color-display-container { flex-shrink: 0; max-width: 180px; margin-right: 15px; flex: 1; }
+    .canvas-container { width: auto; flex-grow: 1; max-width: unset; min-width: unset; height: 300px; }
+    .add-clear-buttons-wrapper { grid-area: add-clear-buttons; }
+    .interpolation-settings { grid-area: interpolation; }
+    .wells-results-section { grid-area: wellsresults; }
+    .wells-results-section p { text-align: left; }
+    .notes { grid-area: notes; }
+
+    #logoImage {
+        grid-area: logo-image;
+        display: block;
+        margin: 0 auto;
+        max-height: 150px;
+        object-fit: contain;
+    }
+
+    .interpolation-settings {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .interpolation-settings .input-group { max-width: 48%; margin-bottom: 10px; }
+    .interpolation-settings button { margin-top: 10px; }
+    .current-fc-formula-display, .current-reduction-variable-name-display, .current-reduction-formula-display, .current-config-display, .save-message {
+        text-align: left; margin-left: 10px;
+    }
+}
+
+/* Desktop e Telas Grandes (>= 1024px) */
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 25px;
+        grid-template-areas:
+            "header header header"
+            "upload upload upload"
+            "instruction instruction instruction"
+            "canvas-wrapper canvas-wrapper logo-image"
+            "add-clear-buttons add-clear-buttons extracted-color"
+            "interpolation interpolation wellsresults"
+            "notes notes notes";
+    }
+
+    .canvas-and-extracted-preview-wrapper { grid-area: canvas-wrapper; flex-direction: row; justify-content: flex-start; align-items: flex-start; flex: none; }
+    .extracted-color-display-container { grid-area: extracted-color; margin-left: 20px; margin-top: 0; margin-right: 0; max-width: 200px; flex: none; }
+    .canvas-container { width: auto; flex-grow: 1; max-width: unset; min-width: 600px; height: 300px; }
+    .interpolation-settings { grid-area: interpolation; flex-direction: row; justify-content: flex-start; gap: 20px; }
+    .interpolation-settings .input-group { flex: 1; max-width: unset; }
+    .wells-results-section { grid-area: wellsresults; grid-row: wellsresults / span 2; height: auto; }
+    .notes { grid-area: notes; }
+
+    #logoImage {
+        grid-area: logo-image;
+        display: block;
+        align-self: center;
+        max-height: 100%;
+    }
+}
